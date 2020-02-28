@@ -5,6 +5,7 @@
 .idea/engsci211_ode_notebooks.iml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/libraries/R_User_Library.xml
+.idea/.gitignore
 .ipynb_checkpoints/engsci211_ode3_improvedeuler-checkpoint.ipynb
 .ipynb_checkpoints/engsci211_ode_laplace_convolution-checkpoint.ipynb
 .ipynb_checkpoints/engsci211_ode_laplace_shift-checkpoint.ipynb
