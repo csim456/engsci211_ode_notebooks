@@ -2,15 +2,312 @@ import numpy as np
 import matplotlib.pyplot as plt
 import traitlets
 from scipy.integrate import ode, odeint
-import ipywidgets as widgets
+# import ipywidgets as widgets
 from IPython.display import display, HTML
 import matplotlib.animation as animation
+
+from matplotlib import pyplot as plt
+import numpy as np
+import time
+import ipywidgets as widgets
+from scipy import integrate
+from ipywidgets import interact, fixed, interactive_output, HBox, Button, VBox, Output, IntSlider, Checkbox, FloatSlider, FloatLogSlider, Dropdown
+
+
+# define ODE
+def solvr1(Y, t, m, c, k):
+	return [Y[1], -c * Y[1] - k * Y[0] / m]
+
+
+# define plot function
+def plotter1(c, m, k):
+	f, ax = plt.subplots(1, 1, figsize=(14, 8))
+	init = [1, 0];
+
+	# m = 1;
+	# k = 1;
+
+	t = np.arange(0, 15.0, 0.01)
+	y = integrate.odeint(solvr1, init, t, args=(m, c, k))
+
+	ax.plot(t, y[:, 0], color='b')
+
+	plt.yticks(np.arange(-1.2, 1.3, 0.4))
+	plt.xlabel('t')
+	plt.ylabel('y')
+
+	if c * c > 4 * m * k:
+		plt.title('y vs t: over-damping')
+	elif c * c == 4 * m * k:
+		plt.title('y vs t: critical-damping')
+	elif c == 0:
+		plt.title('y vs t: no-damping')
+	else:
+		plt.title('y vs t: under-damping')
+
+	# ax.plot([t_i],y[1,0],marker='o', markersize=3, color="red")
+	plt.show()
+
+
+# define ODE
+def solvr2(Y, t, m, c, k):
+	return [Y[1], -c * Y[1] - k * Y[0] / m]
+
+
+# define plot function
+def plotter2(m_double, k_double):
+	f, ax = plt.subplots(1, 1, figsize=(14, 8))
+	init = [1, 0];
+
+	c = 0;
+	m = 1;
+	k = 1;
+
+	if m_double is True:
+		m = 2 * m
+
+	if k_double is True:
+		k = 2 * k
+
+	t = np.arange(0, 15.0, 0.01)
+	y = integrate.odeint(solvr2, init, t, args=(m, c, k))
+
+	ax.plot(t, y[:, 0], color='b')
+
+	plt.yticks(np.arange(-1.2, 1.3, 0.4))
+	plt.xlabel('t')
+	plt.ylabel('y')
+
+	if c * c > 4 * m * k:
+		plt.title('y vs t: over-damping')
+	elif c * c == 4 * m * k:
+		plt.title('y vs t: critical-damping')
+	elif c == 0:
+		plt.title('y vs t: no-damping')
+	else:
+		plt.title('y vs t: under-damping')
+
+	# ax.plot([t_i],y[1,0],marker='o', markersize=3, color="red")
+	plt.show()
+
+
+# m = interact.Checkbox(value = True, description = 'Double m')
+# k = interact.Checkbox(value = False, description = 'Double k')
+
+
+# define ODE
+def solvr3(Y, t, m, c, k):
+	return [Y[1], -c * Y[1] - k * Y[0] / m]
+
+
+# define plot function
+def plotter3(m, k):
+	f, ax = plt.subplots(1, 1, figsize=(14, 8))
+	init = [1, 0];
+
+	c = 0;
+
+	t = np.arange(0, 15.0, 0.01)
+	y = integrate.odeint(solvr3, init, t, args=(m, c, k))
+
+	ax.plot(t, y[:, 0], color='b')
+
+	plt.yticks(np.arange(-1.2, 1.3, 0.4))
+	plt.xlabel('t')
+	plt.ylabel('y')
+
+	if c * c > 4 * m * k:
+		plt.title('y vs t: over-damping')
+	elif c * c == 4 * m * k:
+		plt.title('y vs t: critical-damping')
+	elif c == 0:
+		plt.title('y vs t: no-damping')
+	else:
+		plt.title('y vs t: under-damping')
+
+	# ax.plot([t_i],y[1,0],marker='o', markersize=3, color="red")
+	plt.show()
+
+
+# m = interact.Checkbox(value = True, description = 'Double m')
+# k = interact.Checkbox(value = False, description = 'Double k')
+
+def plotter4():
+	# plot sin
+	f, ax = plt.subplots(1, 1, figsize=(10, 10))
+
+	theta = np.arange(0, 0.8, 0.005)
+	y = np.sin(theta)
+
+	ax.plot(theta, y, color='b')
+
+	plt.yticks(np.arange(0, 0.9, 0.1))
+	plt.xlabel('theta')
+	plt.ylabel('sin(theta)')
+
+	plt.show()
+
+
+# define ODE
+def solvr5(theta, t, omega, k):
+	return [theta[1], - omega * omega * theta[0] + k]
+
+
+# define plot function
+def plotter5(omega):
+	f, ax = plt.subplots(1, 1, figsize=(14, 8))
+	init = [1, 0];
+
+	k = 0;
+
+	t = np.arange(0, 15.0, 0.01)
+	theta = integrate.odeint(solvr5, init, t, args=(omega, k))
+
+	ax.plot(t, theta[:, 0], color='b')
+
+	plt.yticks(np.arange(-1.2, 1.3, 0.4))
+	plt.xlabel('t')
+	plt.ylabel('theta')
+
+	plt.show()
+
+
+# define ODE
+def ode1(y, t):
+	return y + t
+
+
+# define plot function
+def plotter6(n):
+    # dt, time
+    dt = 1 / (n - 1)
+    t = np.linspace(0, 1, n)
+
+    # solution loop
+    y = np.zeros([n])
+    y_a = y
+    y[0] = 0
+    err = 0
+
+    for i in range(1, n):
+        f_e = ode1(y[i - 1], t[i - 1])
+        y_e = y[i - 1] + dt * f_e
+        # y[i] = y[i-1]+dt*(ode(y_e,t[i])+f_e)/2
+        y[i] = y[i - 1] + dt * ode1(y[i - 1], t[i - 1])
+        err = err + (abs(y[i] - (np.exp(t[i]) - t[i] - 1))) ** 2
+
+    err = (err / n) ** 0.5
+
+    # analytic solution
+    t_a = np.linspace(0, 1, 101)
+    y_a = np.zeros(len(t_a))
+    for j in range(1, len(t_a)):
+        y_a[j] = np.exp(t_a[j]) - t_a[j] - 1
+
+    f, ax = plt.subplots(1, 1, figsize=(14, 8))
+
+    ax.plot(t_a, y_a, color='b', label='Analytic')
+    ax.plot(t, y, 'o', color='r', label='Euler')
+    plt.title('RMS error %.4f' % err)
+    legend = ax.legend(loc='upper left', shadow=False)
+
+    # plt.yticks(np.arange(-1.2, 1.3, 0.4))
+    plt.xlabel('t')
+    plt.ylabel('y')
+
+    # ax.plot([t_i],y[1,0],marker='o', markersize=3, color="red")
+    plt.show()
+
+
+# define plot function
+def plotter7(n):
+	# dt, time
+	dt = 1 / (n - 1)
+	t = np.linspace(0, 1, n)
+
+	# solution loop
+	y = np.zeros([n])
+	y_a = y
+	y[0] = 0
+	err = 0
+
+	for i in range(1, n):
+		f_e = ode1(y[i - 1], t[i - 1])
+		y_e = y[i - 1] + dt * f_e
+		y[i] = y[i - 1] + dt * (ode1(y_e, t[i]) + f_e) / 2
+		y[i] = y[i - 1] + dt * ode1(y[i - 1], t[i - 1])
+		err = err + (abs(y[i] - (np.exp(t[i]) - t[i] - 1))) ** 2
+
+	err = (err / n) ** 0.5
+
+	# analytic solution
+	t_a = np.linspace(0, 1, 101)
+	y_a = np.zeros(len(t_a))
+	for j in range(1, len(t_a)):
+		y_a[j] = np.exp(t_a[j]) - t_a[j] - 1
+
+	f, ax = plt.subplots(1, 1, figsize=(14, 8))
+
+	ax.plot(t_a, y_a, color='b', label='Analytic')
+	ax.plot(t, y, 'o', color='r', label='Imp. Euler')
+	plt.title('RMS error %.4f' % err)
+	legend = ax.legend(loc='upper left', shadow=False)
+
+	# plt.yticks(np.arange(-1.2, 1.3, 0.4))
+	plt.xlabel('t')
+	plt.ylabel('y')
+
+	# ax.plot([t_i],y[1,0],marker='o', markersize=3, color="red")
+	plt.show()
+
+
+# define plot function - convolution related
+def plotter8(a):
+	# dt, time
+	m = 101
+	t_0 = np.linspace(0, 8, m)
+	t = np.linspace(0, a, m)
+
+	# solution loop
+	y_0 = np.zeros(m)
+	y = np.zeros(m)
+	Y = np.zeros(m)
+
+	for i in range(0, len(t)):
+		y_0[i] = t_0[i] - a
+		y[i] = np.sin(t_0[i])
+		Y[i] = t[i] - np.sin(t[i])
+
+	f, ax = plt.subplots(1, 1, figsize=(14, 3))
+	ax.plot(t_0, y_0, 'r', label='t')
+	ax.plot(t_0, y, 'k', label='sin(t)')
+	legend = ax.legend(loc='upper left', shadow=False)
+
+	plt.title('y vs t')
+	plt.xlabel('t')
+	plt.ylabel('y')
+	ax.set_xlim([0, 8])
+	ax.set_ylim([-2, 3])
+
+	f, ax2 = plt.subplots(1, 1, figsize=(14, 3))
+	ax2.plot(t, Y, 'b', label='t*sin(t)')
+
+	plt.title('t*sin(t)')
+	plt.xlabel('t')
+	plt.ylabel('t*sin(t)')
+
+	ax2.set_xlim([0, 8])
+	ax2.set_ylim([-2, 9])
+
+	plt.show()
+
 
 ##########
 
 # coursebook examples
 
 ##########
+
 
 def ode0_ex_1_1_func(Tobj, t, Troom, alpha):
 	dTdt = -1.*alpha*(Tobj-Troom)
