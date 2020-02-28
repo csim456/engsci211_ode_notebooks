@@ -6,3 +6,9 @@
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/libraries/R_User_Library.xml
 .ipynb_checkpoints/engsci211_ode3_improvedeuler-checkpoint.ipynb
+.ipynb_checkpoints/engsci211_ode_laplace_convolution-checkpoint.ipynb
+.ipynb_checkpoints/engsci211_ode_laplace_shift-checkpoint.ipynb
+.ipynb_checkpoints/engsci211_ode_numericalmethods-checkpoint.ipynb
+.ipynb_checkpoints/engsci211_ode_pendulum-checkpoint.ipynb
+.ipynb_checkpoints/engsci211_ode_suspension-checkpoint.ipynb
+__pycache__/sourcecode_ode.cpython-36.pyc
